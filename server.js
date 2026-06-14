@@ -139,7 +139,8 @@ app.post('/api/reset', (req, res) => {
 
 // ===== 启动 =====
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
+const HOST = process.env.HOST || "127.0.0.1";
+app.listen(PORT, HOST, () => {
   console.log(`🚀 秒杀系统已启动: http://localhost:${PORT}`);
   console.log(`📦 商品列表:`);
   for (const [id, p] of Object.entries(INVENTORY.PRODUCTS)) {
