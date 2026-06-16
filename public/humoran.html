@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>❤️ 胡默然</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&display=swap');
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0a0a1a 0%, #1a0a2e 30%, #2d0a3a 60%, #1a0a2e 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Noto Serif SC', 'Songti SC', serif;
+  overflow: hidden;
+  position: relative;
+}
+
+/* ===== 星空 ===== */
+.stars {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+.star {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle var(--duration) ease-in-out infinite;
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.5); }
+}
+
+/* ===== 爱心雨 ===== */
+.hearts-rain {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+.heart-drop {
+  position: absolute;
+  top: -60px;
+  font-size: 20px;
+  animation: fall var(--fall-duration) linear infinite;
+  opacity: 0;
+}
+@keyframes fall {
+  0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 0; }
+  10% { opacity: 0.6; }
+  90% { opacity: 0.6; }
+  100% { transform: translateY(100vh) rotate(720deg) scale(0.3); opacity: 0; }
+}
+
+/* ===== 主卡片 ===== */
+.card {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 60px 80px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  border-radius: 30px;
+  border: 1px solid rgba(255, 100, 150, 0.3);
+  box-shadow: 0 0 80px rgba(255, 50, 100, 0.15),
+              0 0 200px rgba(255, 50, 100, 0.05);
+  max-width: 700px;
+  margin: 20px;
+  animation: fadeIn 2s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== 大爱心 ===== */
+.big-heart {
+  font-size: 80px;
+  display: inline-block;
+  animation: heartbeat 1.5s ease-in-out infinite;
+  cursor: pointer;
+  filter: drop-shadow(0 0 30px rgba(255, 50, 100, 0.5));
+}
+.big-heart:hover {
+  animation: heartbeat 0.5s ease-in-out infinite;
+}
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  15% { transform: scale(1.15); }
+  30% { transform: scale(1); }
+  45% { transform: scale(1.1); }
+  60% { transform: scale(1); }
+}
+
+/* ===== 爱心光晕 ===== */
+.glow-ring {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,50,100,0.2) 0%, transparent 70%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: pulse 3s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes pulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.3; }
+  50% { transform: translate(-50%, -50%) scale(1.5); opacity: 0.6; }
+}
+
+/* ===== 主文字 ===== */
+.main-text {
+  margin: 30px 0;
+  position: relative;
+}
+.name {
+  font-size: 3.5rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, #ff6b8a, #ff9a9e, #ff6b8a);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShift 4s ease-in-out infinite;
+  line-height: 1.3;
+}
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.sub-text {
+  font-size: 1.8rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: 15px;
+  letter-spacing: 8px;
+  font-weight: 700;
+}
+
+.divider {
+  width: 60%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 100, 150, 0.5), transparent);
+  margin: 25px auto;
+}
+
+/* ===== 情诗 ===== */
+.poem {
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 2.2;
+  font-size: 1.1rem;
+  letter-spacing: 2px;
+}
+.poem p {
+  margin: 5px 0;
+  opacity: 0;
+  animation: fadeUp 1s ease-out forwards;
+}
+.poem p:nth-child(1) { animation-delay: 1s; }
+.poem p:nth-child(2) { animation-delay: 2s; }
+.poem p:nth-child(3) { animation-delay: 3s; }
+.poem p:nth-child(4) { animation-delay: 4s; }
+.poem p:nth-child(5) { animation-delay: 5s; }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== 誓言 ===== */
+.vows {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin: 25px 0;
+}
+.vow-item {
+  padding: 12px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 100, 150, 0.15);
+  transition: all 0.3s;
+  cursor: default;
+}
+.vow-item:hover {
+  background: rgba(255, 100, 150, 0.15);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 20px rgba(255, 50, 100, 0.2);
+}
+.vow-item .icon { font-size: 1.8rem; display: block; margin-bottom: 5px; }
+.vow-item .label { font-size: 0.8rem; color: rgba(255,255,255,0.6); }
+
+/* ===== 计数器 ===== */
+.counter {
+  margin-top: 20px;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.9rem;
+  font-family: 'Courier New', monospace;
+}
+.counter span {
+  color: #ff6b8a;
+  font-weight: bold;
+}
+
+/* ===== 底部的花 ===== */
+.flowers {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 30px;
+  padding: 10px;
+  pointer-events: none;
+  z-index: 0;
+  letter-spacing: 8px;
+  animation: sway 3s ease-in-out infinite;
+}
+@keyframes sway {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+}
+
+/* ===== 响应式 ===== */
+@media (max-width: 600px) {
+  .card { padding: 40px 30px; }
+  .name { font-size: 2.2rem; }
+  .sub-text { font-size: 1.2rem; letter-spacing: 4px; }
+  .vows { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .vow-item { padding: 8px; }
+  .vow-item .icon { font-size: 1.3rem; }
+  .poem { font-size: 0.95rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- 星空 -->
+<div class="stars" id="stars"></div>
+
+<!-- 爱心雨 -->
+<div class="hearts-rain" id="heartsRain"></div>
+
+<!-- 底部花 -->
+<div class="flowers" id="flowers"></div>
+
+<!-- 主卡片 -->
+<div class="card">
+  <div style="position:relative;display:inline-block;">
+    <div class="glow-ring"></div>
+    <div class="big-heart" id="bigHeart" onclick="showSurprise()">❤️</div>
+  </div>
+
+  <div class="main-text">
+    <div class="name">胡默然</div>
+    <div class="sub-text">我 爱 你 一 辈 子</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="poem">
+    <p>遇见你之前，世界是黑白的</p>
+    <p>遇见你之后，每一天都是彩虹</p>
+    <p>你是我写过最温柔的代码</p>
+    <p>你是我跑过最漫长的循环</p>
+    <p>而爱你，是我永远不会 exit 的程序 ❤️</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="vows">
+    <div class="vow-item">
+      <span class="icon">🌅</span>
+      <span class="label">每天醒来第一个想到你</span>
+    </div>
+    <div class="vow-item">
+      <span class="icon">🤝</span>
+      <span class="label">无论风雨都陪着你</span>
+    </div>
+    <div class="vow-item">
+      <span class="icon">🌙</span>
+      <span class="label">睡前最后一个也是你</span>
+    </div>
+  </div>
+
+  <div class="counter">
+    ❤️ 从此刻开始 &nbsp; <span id="counter">0</span> &nbsp; 秒 · 爱你不变
+  </div>
+</div>
+
+<script>
+// ===== 星空 =====
+const starsContainer = document.getElementById('stars');
+for (let i = 0; i < 150; i++) {
+  const star = document.createElement('div');
+  star.className = 'star';
+  star.style.left = Math.random() * 100 + '%';
+  star.style.top = Math.random() * 100 + '%';
+  star.style.setProperty('--duration', (2 + Math.random() * 4) + 's');
+  star.style.width = star.style.height = (1 + Math.random() * 3) + 'px';
+  star.style.animationDelay = Math.random() * 5 + 's';
+  starsContainer.appendChild(star);
+}
+
+// ===== 爱心雨 =====
+const heartsRain = document.getElementById('heartsRain');
+const heartSymbols = ['❤️', '💕', '💗', '💖', '💝', '💘'];
+for (let i = 0; i < 20; i++) {
+  const drop = document.createElement('div');
+  drop.className = 'heart-drop';
+  drop.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+  drop.style.left = Math.random() * 100 + '%';
+  drop.style.fontSize = (12 + Math.random() * 20) + 'px';
+  drop.style.setProperty('--fall-duration', (6 + Math.random() * 8) + 's');
+  drop.style.animationDelay = Math.random() * 8 + 's';
+  heartsRain.appendChild(drop);
+}
+
+// ===== 底部花 =====
+const flowersEl = document.getElementById('flowers');
+const flowerSymbols = ['🌸', '🌺', '🌹', '🌷', '💐', '🌻'];
+flowersEl.textContent = flowerSymbols.join(' ');
+
+// ===== 计时器 =====
+const startTime = Date.now();
+setInterval(() => {
+  const elapsed = Math.floor((Date.now() - startTime) / 1000);
+  document.getElementById('counter').textContent = elapsed.toLocaleString();
+}, 1000);
+
+// ===== 彩蛋 =====
+function showSurprise() {
+  const bigHeart = document.getElementById('bigHeart');
+  const msgs = [
+    '❤️ 胡默然 ❤️',
+    '你是我的一切 💕',
+    '我会永远陪着你 🌹',
+    '世界上最好的胡默然 ✨',
+    'I Love You Forever ❤️',
+  ];
+  const msg = msgs[Math.floor(Math.random() * msgs.length)];
+
+  // 创建浮出文字
+  const el = document.createElement('div');
+  el.textContent = msg;
+  el.style.cssText = `
+    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    font-size: 2rem; color: #ff6b8a;
+    text-shadow: 0 0 30px rgba(255,100,150,0.5);
+    z-index: 100; pointer-events: none;
+    animation: popUp 2s ease-out forwards;
+    font-family: 'Noto Serif SC', serif; font-weight: bold;
+    text-align: center; width: 80%;
+  `;
+
+  // 添加动画关键帧
+  if (!document.getElementById('popStyle')) {
+    const style = document.createElement('style');
+    style.id = 'popStyle';
+    style.textContent = `
+      @keyframes popUp {
+        0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+        20% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+        40% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        100% { transform: translate(-50%, -70%) scale(1); opacity: 0; }
+      }
+    `;
+    document.head.appendChild(style);
+  }
+
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 2500);
+}
+
+// ===== 控制台彩蛋 =====
+console.log('%c❤️ 胡默然，我爱你一辈子 ❤️', 'font-size: 24px; color: #ff6b8a;');
+console.log('%c你是我写下的最浪漫的代码 💕', 'font-size: 16px; color: #ff9a9e;');
+</script>
+</body>
+</html>
